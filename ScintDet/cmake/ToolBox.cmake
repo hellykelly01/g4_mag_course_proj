@@ -1,0 +1,23 @@
+function(multi_option variable docstring value)
+  set(possible_values "${value}")
+  if(ARGC GREATER "3")
+    list(LENGTH ARGN length)
+    list(PREPEND ARGN "${value}")
+    list(GET ARGN "${length}" value)
+    set(possible_values "${ARGN}")
+  endif()
+
+  option("${variable}" "${docstring}" "${value}")
+  set_property(CACHE "${variable}" PROPERTY STRINGS "${possible_values}")
+
+  if("${${variable}}" STREQUAL OFF)
+    list(GET possible_values 0 FIRST)
+    set(${variable} "${FIRST}" PARENT_SCOPE)
+    set(${variable} "${FIRST}")
+    message(STATUS "setting ${variable} as ${FIRST}")
+  endif()
+
+  if(NOT "${${variable}}" IN_LIST possible_values)
+    message(FATAL_ERROR "The variable \"${variable}\" has an unknown value: ${${variable}}\nPossible values are: ${possible_values}")
+  endif()
+endfunction()

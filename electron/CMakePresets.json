@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "description": "Default build",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_PREFIX_PATH": "/home/lev/geant4/my_projects/mag_course_proj/ScintDet/install/lib/cmake"
+      }, 
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/lev/geant4/my_projects/mag_course_proj/ScintDet/install/lib:$penv{LD_LIBRARY_PATH}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+electron/build
+neutron/build
+positron/build
+ScintDet/build
+ScintDet/install
+.vscode
