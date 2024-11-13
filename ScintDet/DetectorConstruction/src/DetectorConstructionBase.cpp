@@ -135,9 +135,9 @@ G4VPhysicalVolume* DetectorConstructionBase::Construct(){
   G4double sliceEndPhi = 360.0 * deg;
 
   std::vector<G4ThreeVector> vertices;
+  const double phi = (1 + sqrt(5)) / 2;
 
   #ifdef USE_DODECAHEDRON
-  const double phi = (1 + sqrt(5)) / 2;
   vertices = std::vector<G4ThreeVector>({
     G4ThreeVector(1, 1, 1),
     G4ThreeVector(-1, 1, 1),
@@ -160,6 +160,24 @@ G4VPhysicalVolume* DetectorConstructionBase::Construct(){
     G4ThreeVector(phi, -1 / phi, 0),
     G4ThreeVector(-phi, -1 / phi, 0)
   });
+  #endif
+
+  #ifdef USE_ICOSAHEDRON
+  vertices = std::vector<G4ThreeVector>({
+    G4ThreeVector(0, 1, phi),
+    G4ThreeVector(0, 1, -phi),
+    G4ThreeVector(0, -1, phi),
+    G4ThreeVector(0, -1, -phi),
+    G4ThreeVector(1, phi, 0),
+    G4ThreeVector(1, -phi, 0),
+    G4ThreeVector(-1, phi, 0),
+    G4ThreeVector(-1, -phi, 0),
+    G4ThreeVector(phi, 0, 1),
+    G4ThreeVector(-phi, 0, 1),
+    G4ThreeVector(phi, 0, -1),
+    G4ThreeVector(-phi, 0, -1)
+  });
+
   #endif
 
   

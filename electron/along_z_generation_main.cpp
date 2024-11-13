@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
   ActionInitialization* AI = new ActionInitialization;
   FixedPrimaryGeneratorAction* FPGA = new FixedPrimaryGeneratorAction("e-", 1 * MeV);
   AI->RegisterPrimaryGeneratorAction(FPGA);
-  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/electron/output/along_x_generation.root");
+  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/electron/output/along_z_generation.root");
   AI->RegisterRunAction(RA);
   runManager->SetUserInitialization(AI);
 
@@ -43,12 +43,12 @@ int main(int argc, char* argv[]){
 
   runManager->Initialize();
 
-  std::vector<double> x_pos = {-0.99, -0.95, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99};
+  std::vector<double> z_pos = {-0.99, -0.95, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99};
 
-  for (const double& x : x_pos){
-    std::cout << "x = " << x << std::endl;
-    FPGA->SetPosition(G4ThreeVector(x, 0, 0));
-    RA->SetHistName(wrap_number(x));
+  for (const double& z : z_pos){
+    std::cout << "z = " << z << std::endl;
+    FPGA->SetPosition(G4ThreeVector(0, 0, z));
+    RA->SetHistName(wrap_number(z));
     runManager->GeometryHasBeenModified();
     runManager->BeamOn(5000);
   }

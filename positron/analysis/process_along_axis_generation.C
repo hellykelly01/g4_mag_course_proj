@@ -18,7 +18,7 @@ int get_n_trees(const TFile& dir){
 }
 
 void process_along_axis_generation(){
-  TFile in_file("/home/lev/geant4/my_projects/mag_course_proj/electron/output/along_z_generation.root");
+  TFile in_file("/home/lev/geant4/my_projects/mag_course_proj/positron/output/along_z_generation.root");
   const int nPoints = get_n_trees(in_file);
   Double_t x[nPoints];
   Double_t y[nPoints];
@@ -45,7 +45,7 @@ void process_along_axis_generation(){
   gr->SetTitle("response function");
   gr->GetXaxis()->SetTitle("Z");
   gr->GetYaxis()->SetTitle("count");
-  gr->GetYaxis()->SetRangeUser(0, 110);
+  gr->GetYaxis()->SetRangeUser(0, 400);
   gr->Draw("ALP");
-  c1->SaveAs("electrons_along_z.png");
+  c1->SaveAs("positrons_along_z.png");
 }

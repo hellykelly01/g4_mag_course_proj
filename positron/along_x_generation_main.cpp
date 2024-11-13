@@ -33,9 +33,9 @@ int main(int argc, char* argv[]){
   runManager->SetUserInitialization(physicsList);
 
   ActionInitialization* AI = new ActionInitialization;
-  FixedPrimaryGeneratorAction* FPGA = new FixedPrimaryGeneratorAction("e-", 1 * MeV);
+  FixedPrimaryGeneratorAction* FPGA = new FixedPrimaryGeneratorAction("e+", 3 * MeV);
   AI->RegisterPrimaryGeneratorAction(FPGA);
-  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/electron/output/along_x_generation.root");
+  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/positron/output/along_x_generation.root");
   AI->RegisterRunAction(RA);
   runManager->SetUserInitialization(AI);
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
     FPGA->SetPosition(G4ThreeVector(x, 0, 0));
     RA->SetHistName(wrap_number(x));
     runManager->GeometryHasBeenModified();
-    runManager->BeamOn(5000);
+    runManager->BeamOn(2500);
   }
 
   delete runManager;
