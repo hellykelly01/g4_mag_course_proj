@@ -15,7 +15,7 @@ void process_lifespan(){
   }
 
   auto c1 = new TCanvas("c1","c1",200,10,700,500);
-  h1->GetXaxis()->SetTitle("ms");
+  h1->GetXaxis()->SetTitle("microsec");
   h1->GetYaxis()->SetTitle("count");
   auto fit_res = h1->Fit("expo", "RS", "", 20, 180);
   TLatex* latex = new TLatex();
@@ -25,7 +25,7 @@ void process_lifespan(){
   h1->Draw(); 
   std::string lettering = "#tau = ";
   lettering += std::to_string(1/ abs(fit_res->Parameter(1)));
-  lettering += " ms";
+  lettering += " microsec";
   latex->DrawLatex(0.5, 0.5, lettering.c_str());
   c1->SaveAs("neutron_lifespan.png");
 }
