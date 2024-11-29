@@ -5,7 +5,7 @@
 #include "Shielding.hh"
 #include "G4EmStandardPhysics_option4.hh"
 #include "G4OpticalPhysics.hh"
-
+#include "G4ParticleHPManager.hh"
 
 #include "SensitiveDetectorConstruction.h"
 #include "ActionInitialization.h"
@@ -13,8 +13,14 @@
 #include "FixedPrimaryGeneratorAction.h"
 #include "G4SystemOfUnits.hh" 
 
-#include "G4AnalysisManager.hh"
+#include <string>
+#include <vector>
 #include <iostream>
+
+inline std::string wrap_number(const double& num){
+  return std::string("\"") + std::to_string(num) + std::string("\"");
+}
+
 
 int main(int argc, char* argv[]){
 
@@ -28,29 +34,30 @@ int main(int argc, char* argv[]){
 
   ActionInitialization* AI = new ActionInitialization;
   FixedPrimaryGeneratorAction* FPGA = new FixedPrimaryGeneratorAction("neutron", 0.01 * MeV);
-  FPGA->SetPosition(G4ThreeVector(0, 0, 0));
   AI->RegisterPrimaryGeneratorAction(FPGA);
-  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/ScintDet/build/test.root");
-  RA->SetHistName("count");
+  RunAction* RA = new RunAction("/home/lev/geant4/my_projects/mag_course_proj/neutron/output/along_x_generation.root");
   AI->RegisterRunAction(RA);
   runManager->SetUserInitialization(AI);
 
   runManager->SetUserInitialization(new SensitiveDetectorConstruction);
 
+  G4ParticleHPManager::GetInstance()->SetUseOnlyPhotoEvaporation(true);
+  G4ParticleHPManager::GetInstance()->SetDoNotAdjustFinalState(true);
+  G4ParticleHPManager::GetInstance()->SetSkipMissingIsotopes(true);
+
+
   runManager->Initialize();
-  G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-  G4VisManager* visManager = new G4VisExecutive;
-  visManager->Initialize();
 
-  G4UImanager* UImanager = G4UImanager::GetUIpointer();
-  UImanager->ApplyCommand("/vis/open OGL");
-  UImanager->ApplyCommand("/vis/drawVolume");
-  UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true");
-  UImanager->ApplyCommand("/vis/scene/add/trajectories smooth");
-  ui->SessionStart();
+  std::vector<double> x_pos = {-0.95, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95};
 
+  for (const double& x : x_pos){
+    std::cout << "x = " << x << std::endl;
+    FPGA->SetPosition(G4ThreeVector(x, 0, 0));
+    RA->SetHistName(wrap_number(x));
+    runManager->GeometryHasBeenModified();
+    runManager->BeamOn(3000);
+  }
 
   delete runManager;
-  
   return 0;
 }

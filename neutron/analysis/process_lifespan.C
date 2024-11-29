@@ -3,7 +3,7 @@
 
 void process_lifespan(){
 
-  TFile in_file("/home/lev/geant4/my_projects/mag_course_proj/neutron/output/lifespan.root");
+  TFile in_file("/home/lev/geant4/my_projects/mag_course_proj/neutron/output/edge_lifespan.root");
   auto tree = in_file.Get<TTree>("lifespan");
   double lifespan;
   tree->SetBranchAddress("lifespan", &lifespan);
@@ -27,5 +27,5 @@ void process_lifespan(){
   lettering += std::to_string(1/ abs(fit_res->Parameter(1)));
   lettering += " microsec";
   latex->DrawLatex(0.5, 0.5, lettering.c_str());
-  c1->SaveAs("neutron_lifespan.png");
+  c1->SaveAs("neutron_edge_lifespan.png");
 }

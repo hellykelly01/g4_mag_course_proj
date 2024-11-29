@@ -14,7 +14,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_INSTALL_PREFIX": "/home/lev/geant4/my_projects/mag_course_proj/ScintDet/install",
-        "POLYGON_TYPE": "icosahedron"
+        "POLYGON_TYPE": "dodecahedron"
       }
     }
   ]

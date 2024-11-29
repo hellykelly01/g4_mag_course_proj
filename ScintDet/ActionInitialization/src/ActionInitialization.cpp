@@ -6,6 +6,8 @@ void ActionInitialization::RegisterRunAction(G4UserRunAction* RA) { userRunActio
 
 void ActionInitialization::RegisterTrackingAction(G4UserTrackingAction* TA) { userTrackingAction = TA; }
 
+void ActionInitialization::RegisterStackingAction(G4UserStackingAction* SA) { userStackingAction = SA; }
+
 void ActionInitialization::Build() const {
   if(userPrimaryGeneratorAction){
     SetUserAction(userPrimaryGeneratorAction);
@@ -15,6 +17,9 @@ void ActionInitialization::Build() const {
   }
   if(userTrackingAction){
     SetUserAction(userTrackingAction);
+  }
+  if(userStackingAction){
+    SetUserAction(userStackingAction);
   }
   
 }
